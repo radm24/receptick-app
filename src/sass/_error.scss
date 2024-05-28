@@ -1,0 +1,16 @@
+.error-window {
+  @extend %modal;
+
+  width: 50rem;
+  padding: 3rem 0;
+
+  .error {
+    max-width: 42rem;
+  }
+}
+
+@include respond(phone-small) {
+  .error-window {
+    width: 100%;
+  }
+}

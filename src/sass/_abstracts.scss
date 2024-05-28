@@ -1,0 +1,131 @@
+/********** VARIABLES **********/
+
+:root {
+  // Main colors
+  --color-primary--1: #e71e2c; // icons, preview and section headings
+  --color-primary--2: #fc6e67;
+  --color-grad--1: #f7b765;
+  --color-grad--2: #fc6e67;
+
+  // Background colors
+  --color-wrapper: #f7b765; // body background color, unused in light mode
+  --color-background--1: #fff; // main background color
+  --color-background--2: #f9f5f3; // header, active preview, recipe details and directions background
+  --color-background--3: #f2efee; // user-generated icon, recipe ingredients, add recipe, header elements background
+
+  // Text colors
+  --color-text--1: #615551; // default text
+  --color-text--2: #918581; // secondary text (preview publisher, recipe directions)
+  --color-text--3: #d3c7c3; // tertiary text (input field placeholders)
+  --color-text--4: #fff; // button text, some icons
+
+  // Other colors
+  --color-input-borders: #ddd; // add recipe inputs
+
+  // Gradients
+  --gradient--1: linear-gradient(
+    to right bottom,
+    var(--color-grad--1),
+    var(--color-grad--2)
+  ); // main gradient
+
+  --gradient--2: var(--gradient--1); // recipe and preview img, recipe title
+
+  --wrapper-gradient: var(--gradient--1); // body background
+}
+
+[data-theme='dark'] {
+  // Main colors
+  --color-primary--1: #fe9383;
+  --color-primary--2: #f56356;
+  --color-grad--1: #3b2d2a;
+  --color-grad--2: var(--color-grad--1);
+
+  // Background colors
+  --color-wrapper: #261815;
+  --color-background--1: #3b2d2a;
+  --color-background--2: #514441;
+  --color-background--3: #443531;
+
+  // Text colors
+  --color-text--1: #ececec;
+  --color-text--2: #c7c9c9;
+  --color-text--3: #b5b4b4;
+  --color-text--4: #000;
+
+  // Other colors
+  --color-input-borders: #261815;
+
+  // Gradients
+  --gradient--1: linear-gradient(
+    to right bottom,
+    var(--color-primary--2),
+    var(--color-primary--2)
+  );
+
+  --gradient--2: linear-gradient(
+    to right bottom,
+    var(--color-grad--1),
+    var(--color-grad--2)
+  );
+
+  --wrapper-gradient: linear-gradient(
+    to right bottom,
+    var(--color-wrapper),
+    var(--color-wrapper)
+  );
+}
+
+$bp-desktop-md: 93.75em; // 1500px
+$bp-desktop-sm: 85em; // 1360px
+$bp-tablet-lg: 70em; // 1120px
+$bp-tablet-md: 61.25em; // 980px
+$bp-tablet-sm: 49.375em; // 790px
+$bp-phone-lg: 43.75em; // 700px
+$bp-phone-md: 35em; // 560px
+$bp-phone-sm: 29em; // 464px
+
+/********** MEDIA QUERIES **********/
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == desktop-medium {
+    @media only screen and (max-width: $bp-desktop-md) {
+      @content;
+    }
+  }
+  @if $breakpoint == desktop-small {
+    @media only screen and (max-width: $bp-desktop-sm) {
+      @content;
+    }
+  }
+  @if $breakpoint == tablet-large {
+    @media only screen and (max-width: $bp-tablet-lg) {
+      @content;
+    }
+  }
+  @if $breakpoint == tablet-medium {
+    @media only screen and (max-width: $bp-tablet-md) {
+      @content;
+    }
+  }
+  @if $breakpoint == tablet-small {
+    @media only screen and (max-width: $bp-tablet-sm) {
+      @content;
+    }
+  }
+  @if $breakpoint == phone-large {
+    @media only screen and (max-width: $bp-phone-lg) {
+      @content;
+    }
+  }
+  @if $breakpoint == phone-medium {
+    @media only screen and (max-width: $bp-phone-md) {
+      @content;
+    }
+  }
+  @if $breakpoint == phone-small {
+    @media only screen and (max-width: $bp-phone-sm) {
+      @content;
+    }
+  }
+}

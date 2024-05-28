@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="src/img/favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="src/sass/main.scss" />
+    <script type="module" src="src/js/controller.js"></script>
+
+    <title>receptick // Find your meal inspiration</title>
+  </head>
+
+  <body>
+    <!-- App window -->
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <!-- Logo -->
+        <img
+          src="src/img/logo-light.png"
+          alt="Logo"
+          class="header__logo header__logo--light"
+        />
+        <!-- Hidden by default -->
+        <img
+          src="src/img/logo-dark.png"
+          alt="Logo"
+          class="header__logo header__logo--dark"
+        />
+        <!-- Navigation -->
+        <nav class="nav">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <button class="nav__btn nav__btn--add-recipe">
+                <svg class="nav__icon">
+                  <use href="src/img/icons.svg#icon-edit"></use>
+                </svg>
+                <span>Add recipe</span>
+              </button>
+            </li>
+            <li class="nav__item">
+              <button class="nav__btn nav__btn--bookmarks">
+                <svg class="nav__icon">
+                  <use href="src/img/icons.svg#icon-bookmark"></use>
+                </svg>
+                <span>Bookmarks</span>
+              </button>
+              <div class="bookmarks">
+                <ul class="bookmarks__list">
+                  <div class="message">
+                    <div>
+                      <svg>
+                        <use href="src/img/icons.svg#icon-smile"></use>
+                      </svg>
+                    </div>
+                    <p>
+                      No bookmarks yet. Find a nice recipe and bookmark it :)
+                    </p>
+                  </div>
+                </ul>
+              </div>
+            </li>
+            <li class="nav__item">
+              <button class="nav__btn nav__btn--shopping-list">
+                <svg class="nav__icon">
+                  <use href="src/img/icons.svg#icon-shopping-list"></use>
+                </svg>
+                <span>Shopping List</span>
+              </button>
+            </li>
+            <li class="nav__item">
+              <button class="nav__btn nav__btn--meal-planner">
+                <svg class="nav__icon">
+                  <use href="src/img/icons.svg#icon-planner"></use>
+                </svg>
+                <span>Meal Planner</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+        <!-- Search field -->
+        <form class="search">
+          <input
+            type="text"
+            class="search__field"
+            placeholder="Find a recipe or ingredient"
+            maxlength="200"
+          />
+          <button class="btn search__btn">
+            <svg class="search__icon">
+              <use href="src/img/icons.svg#icon-search"></use>
+            </svg>
+            <span>Search</span>
+          </button>
+        </form>
+        <!-- Theme switch slider -->
+        <div class="theme">
+          <svg class="theme__icon--day">
+            <use href="src/img/icons.svg#icon-sun"></use>
+          </svg>
+          <div class="theme__circle theme__circle--light"></div>
+          <svg class="theme__icon--night">
+            <use href="src/img/icons.svg#icon-moon"></use>
+          </svg>
+        </div>
+      </header>
+      <!-- Search results sidebar-->
+      <div class="search-results">
+        <ul class="results">
+          <div class="message">
+            <div>
+              <svg>
+                <use href="src/img/icons.svg#icon-smile"></use>
+              </svg>
+            </div>
+            <p>Start by searching for a recipe or an ingredient. Have fun!</p>
+          </div>
+        </ul>
+        <div class="pagination"></div>
+      </div>
+      <!-- Recipe section -->
+      <div class="recipe">
+        <div class="features">
+          <h2 class="features__title heading--2">
+            What can you do in Receptick?
+          </h2>
+          <div class="features__feature-box">
+            <div class="features__icon">
+              <svg>
+                <use href="src/img/icons.svg#icon-search"></use>
+              </svg>
+            </div>
+            <h3 class="heading--3">Search over thousands of recipes</h3>
+            <p class="features__description">
+              Find recipe ideas, bookmark them, add recipes to your meal planner
+              and select what ingredients you need to buy. They will be waiting
+              for you in your shopping list!
+            </p>
+          </div>
+          <div class="features__feature-box">
+            <div class="features__icon">
+              <svg>
+                <use href="src/img/icons.svg#icon-edit"></use>
+              </svg>
+            </div>
+            <h3 class="heading--3">Add your favorite recipes</h3>
+            <p class="features__description">
+              Give us an URL of your favorite recipe on the Internet, an URL of
+              its image and some more details. We will keep your dearest recipes
+              safe and handy!
+            </p>
+          </div>
+          <div class="features__feature-box">
+            <div class="features__icon">
+              <svg class="features__icon--center">
+                <use href="src/img/icons.svg#icon-list"></use>
+              </svg>
+            </div>
+            <h3 class="heading--3">Manage your shopping list</h3>
+            <p class="features__description">
+              Personal or recipe-selected ingredients can be gathered in your
+              easy-editable shopping list. You choose its title, the items and
+              their order. Download it or check the ingredients in the app.
+            </p>
+          </div>
+          <div class="features__feature-box">
+            <div class="features__icon">
+              <svg class="features__icon--center">
+                <use href="src/img/icons.svg#icon-planner"></use>
+              </svg>
+            </div>
+            <h3 class="heading--3">
+              Find all your future meals in one planner
+            </h3>
+            <p class="features__description">
+              Take time every monday to think about your nutritional goals for
+              the next week. Plan you meals carefully and never ask yourself
+              again "What should I eat today?"
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Overlay -->
+    <div class="overlay hidden"></div>
+    <!-- Add recipe modal window -->
+    <div class="add-recipe-window hidden">
+      <button class="btn--close-modal">&times;</button>
+      <form class="upload">
+        <div class="upload__column">
+          <h3 class="upload__heading">Recipe data</h3>
+          <label>Title</label>
+          <input required name="title" type="text" maxlength="200" />
+          <label>URL</label>
+          <input required name="sourceUrl" type="text" maxlength="500" />
+          <label>Image URL</label>
+          <input required name="image" type="text" maxlength="500" />
+          <label>Publisher</label>
+          <input required name="publisher" type="text" maxlength="200" />
+          <label>Prep time</label>
+          <input required name="cookingTime" type="number" min="1" max="1000" />
+          <label>Servings</label>
+          <input required name="servings" type="number" min="1" max="1000" />
+        </div>
+
+        <div class="upload__column">
+          <h3 class="upload__heading">Ingredients</h3>
+          <div class="upload__ing-controls">
+            <button class="btn--tiny upload__btn-ing" data-action="add">
+              <svg>
+                <use href="src/img/icons.svg#icon-plus"></use>
+              </svg>
+            </button>
+            <button class="btn--tiny upload__btn-ing" data-action="remove">
+              <svg>
+                <use href="src/img/icons.svg#icon-minus"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="upload__ingredients">
+            <div class="upload__ing-row">
+              <label>Ingredient 1</label>
+              <div class="upload__ing-fields">
+                <input
+                  type="number"
+                  name="ing-1-quantity"
+                  placeholder="Quantity"
+                  step="0.01"
+                  min="0.01"
+                  max="10000"
+                />
+                <input
+                  type="text"
+                  name="ing-1-unit"
+                  placeholder="Unit"
+                  maxlength="100"
+                />
+                <input
+                  type="text"
+                  required
+                  name="ing-1-description"
+                  placeholder="Ingredient"
+                  maxlength="200"
+                />
+              </div>
+            </div>
+            <div class="upload__ing-row">
+              <label>Ingredient 2</label>
+              <div class="upload__ing-fields">
+                <input
+                  type="number"
+                  name="ing-2-quantity"
+                  placeholder="Quantity"
+                  step="0.01"
+                  min="0.01"
+                  max="10000"
+                />
+                <input
+                  type="text"
+                  name="ing-2-unit"
+                  placeholder="Unit"
+                  maxlength="100"
+                />
+                <input
+                  type="text"
+                  name="ing-2-description"
+                  placeholder="Ingredient"
+                  maxlength="200"
+                />
+              </div>
+            </div>
+            <div class="upload__ing-row">
+              <label>Ingredient 3</label>
+              <div class="upload__ing-fields">
+                <input
+                  type="number"
+                  name="ing-3-quantity"
+                  placeholder="Quantity"
+                  step="0.01"
+                  min="0.01"
+                  max="10000"
+                />
+                <input
+                  type="text"
+                  name="ing-3-unit"
+                  placeholder="Unit"
+                  maxlength="100"
+                />
+                <input
+                  type="text"
+                  name="ing-3-description"
+                  placeholder="Ingredient"
+                  maxlength="200"
+                />
+              </div>
+            </div>
+            <div class="upload__ing-row">
+              <label>Ingredient 4</label>
+              <div class="upload__ing-fields">
+                <input
+                  type="number"
+                  name="ing-4-quantity"
+                  placeholder="Quantity"
+                  step="0.01"
+                  min="0.01"
+                  max="10000"
+                />
+                <input
+                  type="text"
+                  name="ing-4-unit"
+                  placeholder="Unit"
+                  maxlength="100"
+                />
+                <input
+                  type="text"
+                  name="ing-4-description"
+                  placeholder="Ingredient"
+                  maxlength="200"
+                />
+              </div>
+            </div>
+            <div class="upload__ing-row">
+              <label>Ingredient 5</label>
+              <div class="upload__ing-fields">
+                <input
+                  type="number"
+                  name="ing-5-quantity"
+                  placeholder="Quantity"
+                  step="0.01"
+                  min="0.01"
+                  max="10000"
+                />
+                <input
+                  type="text"
+                  name="ing-5-unit"
+                  placeholder="Unit"
+                  maxlength="100"
+                />
+                <input
+                  type="text"
+                  name="ing-5-description"
+                  placeholder="Ingredient"
+                  maxlength="200"
+                />
+              </div>
+            </div>
+            <div class="upload__ing-row">
+              <label>Ingredient 6</label>
+              <div class="upload__ing-fields">
+                <input
+                  type="number"
+                  name="ing-6-quantity"
+                  placeholder="Quantity"
+                  step="0.01"
+                  min="0.01"
+                  max="10000"
+                />
+                <input
+                  type="text"
+                  name="ing-6-unit"
+                  placeholder="Unit"
+                  maxlength="100"
+                />
+                <input
+                  type="text"
+                  name="ing-6-description"
+                  placeholder="Ingredient"
+                  maxlength="200"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn upload__btn">
+          <svg>
+            <use href="src/img/icons.svg#icon-upload-cloud"></use>
+          </svg>
+          <span>Upload</span>
+        </button>
+      </form>
+    </div>
+    <!-- Shopping list modal window -->
+    <div class="shopping-list-window hidden">
+      <button class="btn--close-modal">
+        <svg>
+          <use href="src/img/icons.svg#icon-cancel"></use>
+        </svg>
+      </button>
+      <div class="shopping-list__img"></div>
+      <div class="shopping-list__container">
+        <h3 class="shopping-list__title">
+          <span>My Shopping List</span>
+        </h3>
+        <form class="shopping-list view">
+          <!-- Shopping list items -->
+          <ul class="shopping-list__list">
+            <div class="message">
+              <div>
+                <svg>
+                  <use href="src/img/icons.svg#icon-smile"></use>
+                </svg>
+              </div>
+              <p>
+                Choose a recipe and add its ingredients to your shopping list!
+              </p>
+            </div>
+          </ul>
+
+          <div class="shopping-list__controls">
+            <button class="btn--list list__btn-edit">
+              <svg>
+                <title>Edit</title>
+                <use href="src/img/icons.svg#icon-edit-pencil"></use>
+              </svg>
+            </button>
+            <button class="btn--list list__btn-delete-all">
+              <svg>
+                <title>Delete All</title>
+                <use href="src/img/icons.svg#icon-bin"></use>
+              </svg>
+            </button>
+            <button class="btn--list list__btn-download">
+              <svg>
+                <title>Download (PDF)</title>
+                <use href="src/img/icons.svg#icon-download"></use>
+              </svg>
+            </button>
+            <button class="btn--list list__btn-add">
+              <svg>
+                <title>Add</title>
+                <use href="src/img/icons.svg#icon-plus"></use>
+              </svg>
+            </button>
+            <button class="btn--list list__btn-save">
+              <svg>
+                <title>Save</title>
+                <use href="src/img/icons.svg#icon-checkmark"></use>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Meal planner modal window -->
+    <div class="planner-window planner--empty hidden">
+      <button class="btn--close-modal">&times;</button>
+      <button class="planner__btn planner__btn--left">
+        <svg>
+          <use href="src/img/icons.svg#icon-long-arrow-left"></use>
+        </svg>
+      </button>
+      <button class="planner__btn planner__btn--right">
+        <svg>
+          <use href="src/img/icons.svg#icon-long-arrow-right"></use>
+        </svg>
+      </button>
+      <ul class="planner__list">
+        <div class="message">
+          <div>
+            <svg>
+              <use href="src/img/icons.svg#icon-smile"></use>
+            </svg>
+          </div>
+          <p>Choose a recipe and add it to your meal planner!</p>
+        </div>
+      </ul>
+    </div>
+    <!-- General error modal window -->
+    <div class="error-window hidden">
+      <button class="btn--close-modal">&times;</button>
+      <div class="error__message"></div>
+    </div>
+  </body>
+</html>
