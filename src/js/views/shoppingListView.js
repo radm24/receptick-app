@@ -241,7 +241,6 @@ class ShoppingListView extends ModalView {
         // Toggle checkbox value
         const checkbox = item.querySelector('[type="checkbox"]');
         checkbox.checked = !checkbox.checked;
-        console.log('checkbox value', checkbox.value);
         this.#form.requestSubmit();
       }
       if (action === 'discard') {
