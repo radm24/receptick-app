@@ -1,5 +1,10 @@
 import { TIMEOUT_SEC } from './config.js';
 
+/**
+ * Returns rejected promise after a given amount of seconds.
+ * @param {number} s Timeout seconds
+ * @returns {Promise}
+ */
 const timeout = function (s) {
   return new Promise(function (_, reject) {
     setTimeout(function () {
@@ -7,7 +12,12 @@ const timeout = function (s) {
     }, s * 1000);
   });
 };
-
+/**
+ * Makes a request to a given URL and returns promise with result.
+ * @param {string} url URL
+ * @param {Object} [opts] Request options
+ * @returns {Promise}
+ */
 const AJAX = async (url, opts) => {
   try {
     const options = { ...opts };
@@ -22,6 +32,10 @@ const AJAX = async (url, opts) => {
   }
 };
 
+/**
+ * Returns timestamp of the current date.
+ * @returns {number}
+ */
 const getCurrentDateTS = () => new Date().setHours(0, 0, 0, 0);
 
 export { AJAX, getCurrentDateTS };

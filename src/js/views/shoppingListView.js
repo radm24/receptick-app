@@ -38,6 +38,10 @@ class ShoppingListView extends ModalView {
     this.#addHandlerDragEnd();
   }
 
+  /**
+   * Provides fallback value for rendering if data is empty and renders 'shopping list' component.
+   * @param  {...*} args
+   */
   render(...args) {
     // Creating a fallback value in case of switching to the 'edit' mode
     // with the empty shopping list, to correctly render an empty input field
@@ -46,16 +50,22 @@ class ShoppingListView extends ModalView {
     super.render(...args);
   }
 
+  /** Toggles between 'view' and 'edit' modes.*/
   #toggleMode() {
     this.#mode = this.#mode === 'view' ? 'edit' : 'view';
     this.#form.classList.toggle('view');
     this.#form.classList.toggle('edit');
   }
 
+  /** Adds event listener to show 'shopping list' modal window on the 'shopping list' button click. */
   #addHandlerShowModal() {
     this.#btnOpen.addEventListener('click', this._showModal.bind(this));
   }
 
+  /**
+   * Adds event listener to close 'shopping list' modal window on click the 'close' button or overlay.
+   * @param {callback} handler
+   */
   addHandlerCloseModal(handler) {
     [this.#btnClose, this._overlay].forEach((el) =>
       el.addEventListener('click', () => {
@@ -79,6 +89,10 @@ class ShoppingListView extends ModalView {
     );
   }
 
+  /**
+   * Adds event listener to save changes made in shopping list on the 'shopping list' form submit.
+   * @param {callback} handler
+   */
   addHandlerUpdateList(handler) {
     this.#form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -91,6 +105,10 @@ class ShoppingListView extends ModalView {
     });
   }
 
+  /**
+   * Adds event listener to download the shopping list as PDF file on the 'download' button click.
+   * @param {callback} handler
+   */
   addHandlerDownloadList(handler) {
     this.#btnDownload.addEventListener('click', (e) => {
       e.preventDefault();
@@ -99,6 +117,7 @@ class ShoppingListView extends ModalView {
     });
   }
 
+  /** Adds event listener to switch the shopping list to 'edit' mode on the 'edit' button click. */
   #addHandlerEditList() {
     this.#btnEdit.addEventListener('click', (e) => {
       e.preventDefault();
@@ -117,6 +136,7 @@ class ShoppingListView extends ModalView {
     });
   }
 
+  /** Adds event listener to handle 'dragstart' event of shopping list items. */
   #addHandlerDragStart() {
     this._parentElement.addEventListener('dragstart', (e) => {
       e.target.classList.add('dragging');
@@ -124,6 +144,7 @@ class ShoppingListView extends ModalView {
     });
   }
 
+  /** Adds event listener to handle 'dragover' event of shopping list items and move them inside the shopping list. */
   #addHandlerDragOver() {
     this._parentElement.addEventListener('dragover', (e) => {
       e.preventDefault();
@@ -151,6 +172,7 @@ class ShoppingListView extends ModalView {
     });
   }
 
+  /** Adds event listener to handle 'dragend' event of shopping list items. */
   #addHandlerDragEnd() {
     this._parentElement.addEventListener('dragend', (e) => {
       e.target.classList.remove('dragging');
@@ -158,6 +180,7 @@ class ShoppingListView extends ModalView {
     });
   }
 
+  /** Adds event listener to empty the shopping list on the 'delete all' button click. */
   #addHandlerDeleteList() {
     this.#btnDeleteAll.addEventListener('click', (e) => {
       e.preventDefault();
@@ -168,6 +191,7 @@ class ShoppingListView extends ModalView {
     });
   }
 
+  /** Adds event listener to add a new item to the shopping list on the 'add' button click. */
   #addHandlerAddListItem() {
     this.#btnAdd.addEventListener('click', (e) => {
       e.preventDefault();
@@ -184,6 +208,7 @@ class ShoppingListView extends ModalView {
     });
   }
 
+  /** Adds event listener to save items in the shopping list on the 'save' button click */
   #addHandlerSaveList() {
     this.#btnSave.addEventListener('click', (e) => {
       e.preventDefault();
@@ -193,6 +218,7 @@ class ShoppingListView extends ModalView {
     });
   }
 
+  /** Adds event listener to check / remove item in the shopping list on click the 'check' or 'discard' buttons. */
   #addHandlerListItemAction() {
     this._parentElement.addEventListener('click', (e) => {
       const btn = e.target.closest('.item-controls__btn');
@@ -216,6 +242,7 @@ class ShoppingListView extends ModalView {
     });
   }
 
+  /** Adds event listener to jump to the next item input on the 'Enter' key press while item input is focused. */
   #addHandlerInputFieldPressEnterKey() {
     this._parentElement.addEventListener('keydown', (e) => {
       const itemInput = e.target.closest('.shopping-list__ing-input');
@@ -236,12 +263,21 @@ class ShoppingListView extends ModalView {
     });
   }
 
+  /**
+   * Generates 'Shopping List' component.
+   * @returns {string} Markup of the component in string format
+   */
   _generateMarkup() {
     return Object.values(this._data)
       .map(this.#generateMarkupListItem.bind(this))
       .join('');
   }
 
+  /**
+   * Generates shopping list item element.
+   * @param  {...*} args Data containing item name, item checked attribute and optional item index attribute
+   * @returns {string} Markup of the element in string format
+   */
   #generateMarkupListItem(...args) {
     const [{ item, checked }, idx = 0] = args;
     const id = `${idx}${Date.now()}`;

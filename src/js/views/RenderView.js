@@ -4,15 +4,16 @@ class RenderView {
   _data;
 
   /**
-   * Render the received object to the DOM
-   * @param {Object | Object[]} data The data to be rendered (e.g. recipe)
-   * @param {String} markup
-   * @returns
-   * @this {Object} RenderView instance
-   * @author Radik Musin
-   * @todo Finish implementation
+   * Callback to execute after component rendering
+   * @callback renderCallback
    */
 
+  /**
+   * Renders specific component or error message to the DOM.
+   * @param {*} data The data to be rendered (e.g. recipe)
+   * @param {String} [markup] HTML in string format
+   * @param {renderCallback} [callback]
+   */
   render(data, markup, callback) {
     if (
       !data ||
@@ -30,6 +31,10 @@ class RenderView {
     if (callback) callback();
   }
 
+  /**
+   * Updates component text and attributes if possible, otherwise re-render the component completely.
+   * @param {*} data The data to be rendered (e.g. recipe)
+   */
   update(data) {
     this._data = data;
     const newMarkup = this._generateMarkup();
@@ -38,10 +43,10 @@ class RenderView {
     let newElements = [...newDOM.querySelectorAll('*')];
     let oldElements = [...this._parentElement.querySelectorAll('*')];
 
-    // Remove exception nodes
-    if (this._updateExceptionNodes) {
-      newElements = this.#removeExceptionNodes(newElements);
-      oldElements = this.#removeExceptionNodes(oldElements);
+    // Remove exception elements
+    if (this._updateExceptionElements) {
+      newElements = this.#removeExceptionElements(newElements);
+      oldElements = this.#removeExceptionElements(oldElements);
     }
 
     // Check if update is possible (call render as fallback)
@@ -71,17 +76,24 @@ class RenderView {
     });
   }
 
+  /** Clears the component content. */
   #clear() {
     this._parentElement.innerHTML = '';
   }
 
-  #removeExceptionNodes(arr) {
-    this._updateExceptionNodes.forEach(
-      (exceptionNode) => (arr = arr.filter((el) => !el.closest(exceptionNode)))
+  /**
+   * Removes elements from component's elements array that should not be considered on component update.
+   * @param {Object[]} arr Component's elements
+   * @returns {Object[]} Components's elements without excluded ones.
+   */
+  #removeExceptionElements(arr) {
+    this._updateExceptionElements.forEach(
+      (exceptionEl) => (arr = arr.filter((el) => !el.closest(exceptionEl)))
     );
     return arr;
   }
 
+  /** Renders a spinner inside a component. */
   renderSpinner() {
     this._parentElement.innerHTML = `
             <div class="spinner">
@@ -92,6 +104,10 @@ class RenderView {
         `;
   }
 
+  /**
+   * Renders an error message inside a component.
+   * @param {*} [message] Error message text.
+   */
   renderError(message = this._errorMessage) {
     this._parentElement.innerHTML = `
         <div class="error">
@@ -105,6 +121,10 @@ class RenderView {
     `;
   }
 
+  /**
+   * Renders a message inside a component.
+   * @param {*} [message] Message text.
+   */
   renderMessage(message = this._message) {
     this._parentElement.innerHTML = `
         <div class="message">

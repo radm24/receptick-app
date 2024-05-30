@@ -19,17 +19,26 @@ class PlannerView extends ModalView {
     this.#addHandlerScrollControls();
   }
 
+  /**
+   * Shows / hides scroll buttons and renders 'meal planner' component.
+   * @param  {...*} args
+   */
   render(...args) {
     const data = Object.entries(args[0]);
     this.#showHideScrollButtons(data);
     super.render(...args);
   }
 
+  /** Hides scroll buttons and renders empty list message. */
   renderMessage() {
     this.#showHideScrollButtons();
     super.renderMessage();
   }
 
+  /**
+   * Adds event listener to show 'meal planner' modal window on the 'meal planner' button click.
+   * @param {callback} handler
+   */
   addHandlerShowModal(handler) {
     this.#btnOpen.addEventListener('click', () => {
       handler();
@@ -37,12 +46,14 @@ class PlannerView extends ModalView {
     });
   }
 
+  /** Adds event listener to close 'meal planner' modal window on click the 'close' button or overlay. */
   #addHandlerCloseModal() {
     [this.#btnClose, this._overlay].forEach((el) =>
       el.addEventListener('click', super._closeModal.bind(this))
     );
   }
 
+  /** Adds event listener to close 'meal planner' modal window on a recipe click. */
   #addHandlerCloseModalOnRecipeClick() {
     this._parentElement.addEventListener('click', (e) => {
       const link = e.target.closest('.preview__link');
@@ -50,6 +61,7 @@ class PlannerView extends ModalView {
     });
   }
 
+  /** Adds event listener to scroll planner list on the scroll buttons click. */
   #addHandlerScrollControls() {
     // Add handlers for 'move left' and 'move right' buttons
     [this.#btnLeft, this.#btnRight].forEach((btn) => {
@@ -67,6 +79,10 @@ class PlannerView extends ModalView {
     });
   }
 
+  /**
+   * Adds event listener to remove recipe from meal planner on the 'remove' button click.
+   * @param {callback} handler
+   */
   addHandlerRemoveRecipe(handler) {
     this._parentElement.addEventListener('click', (e) => {
       const btn = e.target.closest('.preview__btn--remove');
@@ -79,7 +95,7 @@ class PlannerView extends ModalView {
       const dayListEl = itemEl.closest('.planner__day-list');
       itemEl.remove();
 
-      // Check if the planner view should be rerendered
+      // Check if the planner view should be re-rendered
       const forceRender = !dayListEl.childElementCount;
 
       // Check if the datepicker should be considered for updating
@@ -89,6 +105,10 @@ class PlannerView extends ModalView {
     });
   }
 
+  /**
+   * Shows / hides scroll buttons depending on if there are recipes in meal planner or not.
+   * @param {Object[]} data Recipes in meal planner
+   */
   #showHideScrollButtons(data) {
     const isEmptyClass = this._modal.classList.contains('planner--empty');
 
@@ -98,6 +118,10 @@ class PlannerView extends ModalView {
       this._modal.classList.toggle('planner--empty');
   }
 
+  /**
+   * Generates 'Meal Planner' component.
+   * @returns {string} Markup of the component in string format
+   */
   _generateMarkup() {
     // Sort dates in meal planner
     const sortedDates = Object.entries(this._data).sort(
@@ -107,6 +131,11 @@ class PlannerView extends ModalView {
     return sortedDates.map(this.#generateMarkupPlannerDay).join('');
   }
 
+  /**
+   * Generates day element of the 'meal planner' component.
+   * @param {[string, Object[]]} data  Data containing date in string format and recipes for that date
+   * @returns {string} Markup of the element in string format
+   */
   #generateMarkupPlannerDay([date, recipes]) {
     // Check if provided date is today's date
     const today = Date.parse(date) === getCurrentDateTS();

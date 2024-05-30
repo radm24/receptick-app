@@ -24,16 +24,22 @@ class AddRecipeView extends ModalView {
     this.#addHandlerIngControls();
   }
 
+  /** Adds event listener to show 'add recipe' modal window on the 'add recipe' button click. */
   #addHandlerShowModal() {
     this.#btnOpen.addEventListener('click', super._showModal.bind(this));
   }
 
+  /** Adds event listener to close 'add recipe' modal window on click the 'close' button or overlay. */
   #addHandlerCloseModal() {
     [this.#btnClose, this._overlay].forEach((el) =>
       el.addEventListener('click', this.closeModal.bind(this))
     );
   }
 
+  /**
+   * Add event listener to upload user recipe on the 'upload' button click.
+   * @param {callback} handler
+   */
   addHandlerUpload(handler) {
     this._parentElement.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -44,16 +50,18 @@ class AddRecipeView extends ModalView {
     });
   }
 
+  /** Closes 'add recipe' modal window and re-renders 'add recipe' component if there is error or success message. */
   closeModal() {
     if (this._modal.classList.contains('hidden')) return;
 
     super._closeModal();
 
-    // Rerender 'add recipe' page if success or error message has replaced its content
+    // Re-render 'add recipe' page if success or error message has replaced its content
     // Check if modal window was closed
     if (this._modal.classList.contains('hidden')) this.#checkAndRerender();
   }
 
+  /** Checks if there is error or success message, if so then re-renders 'add recipe' component. */
   #checkAndRerender() {
     const render = !!this._parentElement.querySelector(
       ':scope > .message, :scope > .error'
@@ -68,6 +76,7 @@ class AddRecipeView extends ModalView {
     );
   }
 
+  /** Adds event listener to newly rendered ingredients control buttons. */
   #reinitHandlerIngControls() {
     this.#ingControls = document.querySelector('.upload__ing-controls');
     this.#ingredientsEl = document.querySelector('.upload__ingredients');
@@ -75,6 +84,7 @@ class AddRecipeView extends ModalView {
     this.#addHandlerIngControls();
   }
 
+  /** Adds event listener to add / remove ingredient inputs row on ingredients control buttons click. */
   #addHandlerIngControls() {
     this.#ingControls.addEventListener('click', (e) => {
       const btn = e.target.closest('.upload__btn-ing');
@@ -97,6 +107,10 @@ class AddRecipeView extends ModalView {
     });
   }
 
+  /**
+   * Adds new ingredient inputs row.
+   * @param {number} numRows Current number of ingredients rows
+   */
   #addIngRow(numRows) {
     const newRow = this.#generateIngRow(numRows + 1);
     this.#ingredientsEl.insertAdjacentHTML('beforeend', newRow);
@@ -105,6 +119,10 @@ class AddRecipeView extends ModalView {
     this.#ingredientsEl.lastElementChild.scrollIntoView({ behavior: 'smooth' });
   }
 
+  /**
+   * Removes specified ingredient inputs row.
+   * @param {Element} lastRow Ingredient element to remove
+   */
   #removeIngRow(lastRow) {
     this.#ingredientsEl.removeChild(lastRow);
 
@@ -112,6 +130,11 @@ class AddRecipeView extends ModalView {
     this.#ingredientsEl.lastElementChild.scrollIntoView({ behavior: 'smooth' });
   }
 
+  /**
+   * Generates ingredient inputs row.
+   * @param {number} num Serial number of new ingredient element
+   * @returns {string} Markup of ingredient element in string format
+   */
   #generateIngRow(num) {
     return `
       <div class="upload__ing-row">
@@ -138,6 +161,10 @@ class AddRecipeView extends ModalView {
     `;
   }
 
+  /**
+   * Generates 'Add Recipe' component.
+   * @returns {string} Markup of the component in string format
+   */
   _generateMarkup() {
     return `
       <div class="upload__column">

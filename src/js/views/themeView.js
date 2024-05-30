@@ -4,6 +4,10 @@ class ThemeView {
   #logoLight = document.querySelector('.header__logo--light');
   #logoDark = document.querySelector('.header__logo--dark');
 
+  /**
+   * Adds event listener to toggle theme on the 'theme' slider click.
+   * @param {callback} handler
+   */
   addHandlerToggleTheme(handler) {
     document.querySelector('.theme').addEventListener('click', () => {
       const newTheme =
@@ -13,6 +17,10 @@ class ThemeView {
     });
   }
 
+  /**
+   * Sets new color theme.
+   * @param {'dark' | 'light'} newTheme New theme value
+   */
   setTheme(newTheme) {
     this.#htmlEl.dataset.theme = newTheme;
 

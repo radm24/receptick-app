@@ -18,6 +18,10 @@ import errorView from './views/errorView.js';
 
 ////////// RECIPE //////////
 
+/**
+ * Renders a given recipe.
+ * @param {string} recipeId Recipe ID
+ */
 const renderRecipe = (recipeId) => {
   recipeView.render(model.state.recipe);
 
@@ -33,6 +37,7 @@ const renderRecipe = (recipeId) => {
   recipeView.addHandlerPlanner(recipePlannerDays, controlAddRecipeToPlanner);
 };
 
+/** Handles hash change of location interface and loads recipe with that ID if it's not empty. */
 const controlRecipe = async () => {
   try {
     const recipeId = window.location.hash.slice(1);
@@ -52,11 +57,14 @@ const controlRecipe = async () => {
     // 3. Rendering recipe
     renderRecipe(recipeId);
   } catch (err) {
-    console.error(err);
     recipeView.renderError();
   }
 };
 
+/**
+ * Handles value change of servings and updates servings, ingredient values.
+ * @param {number} newServings New servings value
+ */
 const controlServings = (newServings) => {
   // Update the recipe servings (in state)
   model.updateServings(newServings);
@@ -65,6 +73,10 @@ const controlServings = (newServings) => {
   recipeView.update(model.state.recipe);
 };
 
+/**
+ * Handles date selection in a datepicker.
+ * @param {string} date Selected date in a datepicker
+ */
 const controlAddRecipeToPlanner = (date) => {
   if (
     model.state.mealPlanner.dates[date]?.length >= PLANNER_MAX_ITEMS_PER_DAY
@@ -78,6 +90,7 @@ const controlAddRecipeToPlanner = (date) => {
   }
 };
 
+/** Handles recipe addition to bookmarks or unbookmark it. */
 const controlUpdateBookmark = () => {
   // Add / remove bookmark
   model.updateBookmark();
@@ -89,6 +102,7 @@ const controlUpdateBookmark = () => {
   bookmarksView.render(model.state.bookmarks);
 };
 
+/** Handles ingredients addition to the shopping list. */
 const controlAddIngredientsToShoppingList = () => {
   // Add recipe ingredients to shopping list
   const errorMsg = model.addIngredientsToShoppingList();
@@ -100,6 +114,7 @@ const controlAddIngredientsToShoppingList = () => {
 
 ////////// SEARCH RESULTS //////////
 
+/** Handles searching a given query. */
 const controlSearchResults = async () => {
   try {
     // 1. Get search query
@@ -120,6 +135,10 @@ const controlSearchResults = async () => {
   }
 };
 
+/**
+ * Handles page change in pagination.
+ * @param {number} goToPage New page value
+ */
 const controlPagination = (goToPage) => {
   // Update search results and pagination buttons
   resultsView.update(model.getSearchResultsPage(goToPage));
@@ -128,6 +147,10 @@ const controlPagination = (goToPage) => {
 
 ////////// UPLOAD RECIPE //////////
 
+/**
+ * Handles user recipe upload.
+ * @param {Object} newRecipe User recipe data
+ */
 const controlAddRecipe = async (newRecipe) => {
   try {
     addRecipeView.renderSpinner();
@@ -157,26 +180,37 @@ const controlAddRecipe = async (newRecipe) => {
 
 ////////// THEME //////////
 
+/**
+ * Handles theme change.
+ * @param {'dark' | 'light'} newTheme New theme value
+ */
 const controlToggleTheme = (newTheme) => {
   model.updateTheme(newTheme);
 };
 
 ////////// SHOPPING LIST //////////
 
+/** Renders the shopping list. */
 const renderShoppingList = () => {
   if (!model.state.shoppingList.length) shoppingListView.renderMessage();
   else shoppingListView.update(model.state.shoppingList);
 };
 
+/** Handles closing of the 'shopping list' modal window in 'edit' mode. */
 const controlCloseShoppingListOnEditMode = () => {
   renderShoppingList();
 };
 
+/**
+ * Handles changes in the shopping list.
+ * @param {Object} newList Shopping list data
+ */
 const controlUpdateShoppingList = (newList) => {
   model.updateShoppingList(newList);
   renderShoppingList();
 };
 
+/** Handles download of the shopping list as PDF file. */
 const controlDownloadShoppingList = () => {
   if (!model.state.shoppingList.length) return;
 
@@ -241,6 +275,7 @@ const controlDownloadShoppingList = () => {
 
 ////////// MEAL PLANNER //////////
 
+/** Updates entries in the meal planner according to the current date. */
 const updatePlannerToCurrentDate = () => {
   if (!model.state.mealPlanner.recipes.length) plannerView.renderMessage();
   else plannerView.render(model.state.mealPlanner.dates);
@@ -254,12 +289,19 @@ const updatePlannerToCurrentDate = () => {
     );
 };
 
+/** Checks whether a date used in the app is actual.  */
 const controlCheckUpdateCurrentDate = () => {
   // Check if today's date is changed
-  const forceRender = model.checkUpdateCurrentDate();
-  if (forceRender) updatePlannerToCurrentDate();
+  const update = model.checkUpdateCurrentDate();
+  if (update) updatePlannerToCurrentDate();
 };
 
+/**
+ * Handles entry removing from the meal planner.
+ * @param {number} id Item ID
+ * @param {boolean} forceRender Indicates whether the 'meal planner' component should be re-rendered
+ * @param {boolean} isActiveRecipe Indicates whether an item to remove is currently an active recipe
+ */
 const controlRemoveRecipeFromPlanner = (id, forceRender, isActiveRecipe) => {
   // Check if today's date is changed
   controlCheckUpdateCurrentDate();
@@ -283,6 +325,7 @@ const controlRemoveRecipeFromPlanner = (id, forceRender, isActiveRecipe) => {
   if (!entries) recipeView.updateDatePickerEvents(date, 'remove');
 };
 
+/** Initializes the application. */
 const init = () => {
   const state = model.state;
 

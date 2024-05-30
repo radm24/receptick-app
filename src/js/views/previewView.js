@@ -1,6 +1,10 @@
 import icons from '../../img/icons.svg';
 
 class PreviewView {
+  /**
+   * Generates 'Preview' component.
+   * @returns {string} Markup of the component in string format
+   */
   generateMarkup(data, page) {
     const { id, entryId, image, title, publisher, key } = data;
     const curId = window.location.hash.slice(1);

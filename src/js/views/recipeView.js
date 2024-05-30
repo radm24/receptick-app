@@ -8,16 +8,27 @@ import { getCurrentDateTS } from '../helpers.js';
 class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
   _errorMessage = "We couldn't find that recipe. Please try another one!";
-  _updateExceptionNodes = ['.qs-datepicker-container'];
+  _updateExceptionElements = [
+    '.qs-datepicker-container',
+    '.recipe__nutritional-value',
+  ];
 
   #datePicker;
 
+  /**
+   * Adds event listeners to load recipe on hash change or initial load.
+   * @param {callback} handler
+   */
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach((ev) =>
       window.addEventListener(ev, handler)
     );
   }
 
+  /**
+   * Adds event listener to increase / decrease servings on the servings control buttons click.
+   * @param {callback} handler
+   */
   addHandlerUpdateServings(handler) {
     this._parentElement
       .querySelector('.recipe__info-buttons')
@@ -27,6 +38,11 @@ class RecipeView extends View {
       });
   }
 
+  /**
+   * Renders datepicker element and handles its selected date.
+   * @param {Object[]} dateEvents Dates that should be indicated as events
+   * @param {callback} handler
+   */
   addHandlerPlanner(dateEvents, handler) {
     const now = new Date();
     const getMaxDate = (date) =>
@@ -50,7 +66,7 @@ class RecipeView extends View {
         e.minDate = today;
         e.maxDate = getMaxDate(today);
 
-        // Force to rerender calendar
+        // Force to re-render calendar
         this.#datePicker.setDate();
       },
       onSelect: ({ dateSelected }) => {
@@ -81,18 +97,31 @@ class RecipeView extends View {
       });
   }
 
+  /**
+   * Adds event listener to bookmark / unbookmark a recipe on the 'bookmark' button click.
+   * @param {callback} handler
+   */
   addHandlerBookmark(handler) {
     this._parentElement
       .querySelector('.btn--bookmark')
       .addEventListener('click', handler);
   }
 
+  /**
+   * Adds event listener to add recipe ingredients to the shopping list on the 'ingredients' button click.
+   * @param {callback} handler
+   */
   addHandlerIngredients(handler) {
     this._parentElement
       .querySelector('.btn--ingredients')
       .addEventListener('click', handler);
   }
 
+  /**
+   * Updates datepicker's events array according to provided action.
+   * @param {Date} date Date to add / remove / filter by
+   * @param {'add' | 'remove' | 'update'} action Action to perform on datepicker's events array
+   */
   updateDatePickerEvents(date, action) {
     const events = this.#datePicker.events;
     const timestamp = Date.parse(date); // NaN if date is undefined
@@ -109,10 +138,14 @@ class RecipeView extends View {
       this.#datePicker.events = Object.fromEntries(filteredEventEntries);
     }
 
-    // Rerender calendar to update date events
+    // Re-render calendar to update date events
     this.#datePicker.setDate();
   }
 
+  /**
+   * Generates 'Recipe' component.
+   * @returns {string} Markup of the component in string format
+   */
   _generateMarkup() {
     const {
       image,
@@ -224,6 +257,11 @@ class RecipeView extends View {
     `;
   }
 
+  /**
+   * Generates nutritional data block.
+   * @param {Object} nutrients Nutrients data
+   * @returns {string} Markup of the element in string format
+   */
   #generateMarkupNutrients(nutrients) {
     return `
         <div class="recipe__nutritional-value">
@@ -246,6 +284,14 @@ class RecipeView extends View {
     `;
   }
 
+  /**
+   * Generates ingredient element.
+   * @param {Object} ingredient Ingredient data (quantity, unit, description)
+   * @param {number | null} ingredient.quantity
+   * @param {string} ingredient.unit
+   * @param {string} ingredient.description
+   * @returns {string} Markup of the element in string format
+   */
   #generateMarkupIngredients({ quantity, unit, description }) {
     return `
         <li class="recipe__ingredient">

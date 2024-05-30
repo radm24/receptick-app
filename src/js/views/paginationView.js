@@ -4,6 +4,10 @@ import icons from '../../img/icons.svg';
 class PaginationView extends RenderView {
   _parentElement = document.querySelector('.pagination');
 
+  /**
+   * Adds event listener to change page of search results on the 'pagination' buttons click.
+   * @param {callback} handler
+   */
   addHandlerClick(handler) {
     this._parentElement.addEventListener('click', (e) => {
       const btn = e.target.closest('.pagination__btn');
@@ -11,6 +15,10 @@ class PaginationView extends RenderView {
     });
   }
 
+  /**
+   * Generates 'Pagination' component.
+   * @returns {string} Markup of the component in string format
+   */
   _generateMarkup() {
     const { page, results, resultsPerPage } = this._data;
     const numPages = Math.ceil(results.length / resultsPerPage);
