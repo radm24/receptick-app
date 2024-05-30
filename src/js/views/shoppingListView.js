@@ -232,8 +232,16 @@ class ShoppingListView extends ModalView {
         : 'discard';
 
       if (action === 'check') {
+        // Toggle 'readonly' attribute of input element
+        const input = item.querySelector('[type="text"]');
+        input.getAttribute('readonly') === null
+          ? input.setAttribute('readonly', '')
+          : input.removeAttribute('readonly');
+
+        // Toggle checkbox value
         const checkbox = item.querySelector('[type="checkbox"]');
         checkbox.checked = !checkbox.checked;
+        console.log('checkbox value', checkbox.value);
         this.#form.requestSubmit();
       }
       if (action === 'discard') {
