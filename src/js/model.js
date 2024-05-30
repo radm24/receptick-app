@@ -79,7 +79,7 @@ const getNutrientAmountPerServing = (
 };
 
 /**
- * Get nutritional data for given ingredients and amount of servings.
+ * Get nutritional data for given ingredients and amount of servings using spoonacular API.
  * @param {Object} data Ingredients and servings data
  * @param {Object[]} data.ingredients Ingredients data
  * @param {number} data.servings Servings data
