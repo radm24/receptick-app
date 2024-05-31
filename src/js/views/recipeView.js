@@ -1,11 +1,11 @@
-import View from './RenderView.js';
+import RenderView from './RenderView.js';
 import icons from '../../img/icons.svg';
 import fracty from 'fracty';
 import datepicker from 'js-datepicker';
 import { PLANNER_DAYS_INTERVAL } from '../config.js';
 import { getCurrentDateTS } from '../helpers.js';
 
-class RecipeView extends View {
+class RecipeView extends RenderView {
   _parentElement = document.querySelector('.recipe');
   _errorMessage = "We couldn't find that recipe. Please try another one!";
   _updateExceptionElements = [
